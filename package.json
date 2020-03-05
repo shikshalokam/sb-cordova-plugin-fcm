@@ -11,7 +11,7 @@
   "author": "André Augusto Tissot",
   "repository": {
     "type": "git",
-    "url": "https://github.com/andrehtissot/cordova-plugin-fcm-with-dependecy-updated"
+    "url": "https://github.com/Sunbird-Ed/sb-cordova-plugin-fcm.git"
   },
   "keywords": [
     "ecosystem:cordova",
