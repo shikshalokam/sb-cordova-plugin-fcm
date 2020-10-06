@@ -135,6 +135,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         FCMPlugin.sendPushPayload(data);
         //To get a Bitmap image from the URL received
 
+        SharedPreferences.Editor edit = this.getSharedPreferences().edit();
+        edit.putString(NotificationUtils.NOTIFICATION_RECEIVED_AT, new Date().toString());
+        edit.commit();
+
         try {
             Map<String, String> notificationData = remoteMessage.getData();
             JSONObject actionData = new JSONObject(notificationData.get("actionData"));
