@@ -28,12 +28,12 @@ public class FCMPluginActivity extends Activity {
 		Map<String, Object> data = new HashMap<String, Object>();
         if (getIntent().getExtras() != null) {
 			Log.d(TAG, "==> USER TAPPED NOTFICATION");
-			data.put("wasTapped", true);
 			for (String key : getIntent().getExtras().keySet()) {
                 Object value = getIntent().getExtras().get(key);
                 Log.d(TAG, "\tKey: " + key + " Value: " + value);
 				data.put(key, value);
             }
+			data.put("wasTapped", true);
         }
 		
 		FCMPlugin.sendPushPayload(data);
