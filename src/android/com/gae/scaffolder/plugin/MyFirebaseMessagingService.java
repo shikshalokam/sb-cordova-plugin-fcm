@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public class NotificationUtils extends ContextWrapper {
         public static final String ANDROID_CHANNEL_ID = "announcement";
         public static final String ANDROID_CHANNEL_NAME = "Announcement";
+        public static final String NOTIFICATION_RECEIVED_AT = "notification_received_at";
         private NotificationManager mManager;
 
         public NotificationUtils(Context base) {
