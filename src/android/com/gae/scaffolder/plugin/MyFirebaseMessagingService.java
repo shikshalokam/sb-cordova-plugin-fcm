@@ -136,7 +136,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //To get a Bitmap image from the URL received
 
         SharedPreferences.Editor edit = this.getSharedPreferences().edit();
-        edit.putString(NotificationUtils.NOTIFICATION_RECEIVED_AT, new Date().toString());
+        edit.putString(NotificationUtils.NOTIFICATION_RECEIVED_AT, String.valueOf(new Date().getTime()));
         edit.commit();
 
         try {
