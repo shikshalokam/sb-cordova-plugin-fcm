@@ -150,29 +150,16 @@ static FCMPlugin *fcmPluginInstance;
 
 -(void) notifyOfMessage:(NSData *)payload
 {
-    NSString *JSONString = [[NSString alloc] initWithBytes:[payload bytes] length:[payload length] encoding:NSUTF8StringEncoding];
-    NSString * notifyJS = [NSString stringWithFormat:@"%@(%@);", notificationCallback, JSONString];
-    NSLog(@"stringByEvaluatingJavaScriptFromString %@", notifyJS);
-    
-    if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
-        [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
-    } else {
-        [self.webViewEngine evaluateJavaScript:notifyJS completionHandler:nil];
-    }
+    NSLog(@"notifyOfMessage payload: %@", payload);
+    NSString* JSONString = [[NSString alloc] initWithBytes:[payload bytes] length:[payload length] encoding:NSUTF8StringEncoding];
+    [self dispatchJSEvent:notificationEventName withData:JSONString];
 }
 
 -(void) notifyFCMTokenRefresh:(NSString *)token
 {
     NSLog(@"notifyFCMTokenRefresh token: %@", token);
-    fcmToken = token;
-    NSString * notifyJS = [NSString stringWithFormat:@"%@('%@');", tokenRefreshCallback, token];
-    NSLog(@"stringByEvaluatingJavaScriptFromString %@", notifyJS);
-    
-    if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
-        [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
-    } else {
-        [self.webViewEngine evaluateJavaScript:notifyJS completionHandler:nil];
-    }
+    NSString* jsToken = [NSString stringWithFormat:@"\"%@\"", token];
+    [self dispatchJSEvent:tokenRefreshCallback withData:jsToken];
 }
 
 -(void) appEnterBackground
