@@ -19,6 +19,7 @@ static NSString *tokenRefreshCallback = @"FCMPlugin.onTokenRefreshReceived";
 static NSString *apnsToken = nil;
 static NSString *fcmToken = nil;
 static FCMPlugin *fcmPluginInstance;
+static NSString *jsEventBridgeCallbackId;
 
 + (FCMPlugin *) fcmPlugin {
     return fcmPluginInstance;
@@ -72,6 +73,11 @@ static FCMPlugin *fcmPluginInstance;
         }
         [self.commandDelegate sendPluginResult:commandResult callbackId:command.callbackId];
     }];
+}
+
+- (void)startJsEventBridge:(CDVInvokedUrlCommand *)command {
+    NSLog(@"start Js Event Bridge");
+    jsEventBridgeCallbackId = command.callbackId;
 }
 
 // GET TOKEN //
@@ -160,6 +166,19 @@ static FCMPlugin *fcmPluginInstance;
     NSLog(@"notifyFCMTokenRefresh token: %@", token);
     NSString* jsToken = [NSString stringWithFormat:@"\"%@\"", token];
     [self dispatchJSEvent:tokenRefreshCallback withData:jsToken];
+}
+
+- (void)dispatchJSEvent:(NSString *)eventName withData:(NSString *)jsData {
+    if(jsEventBridgeCallbackId == nil) {
+        NSLog(@"dispatchJSEvent: Unable to send event due to unreachable bridge context: %@ with %@", eventName, jsData);
+        return;
+    }
+    NSLog(@"dispatchJSEvent: %@ with %@", eventName, jsData);
+    NSString* eventDataTemplate = @"[\"%@\",%@]";
+    NSString* eventData = [NSString stringWithFormat:eventDataTemplate, eventName, jsData];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:eventData];
+    [pluginResult setKeepCallbackAsBool:TRUE];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:jsEventBridgeCallbackId];
 }
 
 -(void) appEnterBackground
