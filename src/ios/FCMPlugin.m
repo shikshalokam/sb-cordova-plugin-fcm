@@ -155,7 +155,7 @@ static FCMPlugin *fcmPluginInstance;
     NSLog(@"stringByEvaluatingJavaScriptFromString %@", notifyJS);
     
     if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
-        [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
+        [(WKWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
     } else {
         [self.webViewEngine evaluateJavaScript:notifyJS completionHandler:nil];
     }
@@ -169,8 +169,8 @@ static FCMPlugin *fcmPluginInstance;
     NSLog(@"stringByEvaluatingJavaScriptFromString %@", notifyJS);
     
     if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
-        [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
-    } else {
+        [(WKWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
+    } else 
         [self.webViewEngine evaluateJavaScript:notifyJS completionHandler:nil];
     }
 }
