@@ -172,7 +172,6 @@ static FCMPlugin *fcmPluginInstance;
         // [(WKWebView *)self.webView stringByEvaluatingJavaScriptFromString:notifyJS];
     } else 
         [self.webViewEngine evaluateJavaScript:notifyJS completionHandler:nil];
-    }
 }
 
 -(void) appEnterBackground
