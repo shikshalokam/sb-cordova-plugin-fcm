@@ -102,7 +102,7 @@
 		<!-- FIREBASE COCOA PODS-->
 		<podspec>
             <config>
-                <source url="https://github.com/CocoaPods/Specs.git"/>
+                <source url="https://cdn.cocoapods.org/"/>
             </config>
             <pods>
 				<pod name="Firebase/Analytics" spec="~> 6.3.0" />
